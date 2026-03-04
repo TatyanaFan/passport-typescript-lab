@@ -1,0 +1,20 @@
+<div class="container mt-5">
+  <h1>Admin Dashboard</h1>
+
+  <h3 class="mt-4">Current Active Sessions:</h3>
+
+  <% if (!sessions || Object.keys(sessions).length === 0) { %>
+    <p>No active sessions.</p>
+  <% } else { %>
+    <% Object.entries(sessions).forEach(([sid, sess]) => { %>
+      <div class="mb-3">
+        <div><strong>SessionID:</strong> <%= sid %></div>
+        <div><strong>UserID:</strong> <%= sess?.passport?.user ?? "unknown" %></div>
+
+        <form method="POST" action="/auth/admin/revoke/<%= sid %>">
+          <button class="btn btn-link p-0" type="submit">Revoke Session</button>
+        </form>
+      </div>
+    <% }) %>
+  <% } %>
+</div>
